@@ -8,6 +8,6 @@ server=ThreadingHTTPServer(('127.0.0.1',0),partial(SimpleHTTPRequestHandler,dire
 threading.Thread(target=server.serve_forever,daemon=True).start()
 env={**os.environ,'PKM_TEST_URL':f'http://127.0.0.1:{server.server_port}/PKM-UI-V2.2.html'}
 try:
- for name in sys.argv[1:] or ['v5','details','ui_v2','cardmarket','security','bundle','sv7']:
+ for name in sys.argv[1:] or ['v5','details','ui_v2','cardmarket','security','bundle','sv7','scroll']:
   subprocess.run([sys.executable,str(root/f'browser_check_{name}.py')],env=env,check=True)
 finally:server.shutdown();server.server_close()
