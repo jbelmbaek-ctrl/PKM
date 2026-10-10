@@ -68,6 +68,7 @@ html+='<!-- TCGdex data license\n'+(base/'TCGDEX-LICENSE.txt').read_text()+'\n'+
 release_dir=base.parent/'dist'
 release_dir.mkdir(exist_ok=True)
 (release_dir/'PKM-UI-V2.2.html').write_text(html)
+(release_dir/'PKM-v2.2.2.html').write_text(html)
 Path('/tmp/PKM-UI-V2.2.html').write_text(html)
 print('Built /tmp/PKM-UI-V2.2.html')
 Path('/tmp/pkm-standalone.mjs').write_text(adapter+'\n'+app+'\n'+extraJS+'\n'+backup)

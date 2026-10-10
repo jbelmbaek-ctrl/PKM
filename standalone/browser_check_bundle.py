@@ -7,7 +7,7 @@ from playwright.sync_api import sync_playwright,expect
 root=Path(__file__).resolve().parent.parent
 with sync_playwright() as p:
  b=p.chromium.launch(executable_path=os.environ.get('PKM_BROWSER_EXECUTABLE') or shutil.which('chromium') or shutil.which('google-chrome'),headless=True,args=['--no-sandbox']);page=b.new_page();errors=[];page.on('pageerror',lambda e:errors.append(str(e)));page.goto(os.environ['PKM_TEST_URL']);page.wait_for_selector('#v5tools')
- page.locator('nav button').filter(has_text='Import').click()
+ page.locator('nav button').filter(has_text='Import').click();assert page.locator('#cm-file').count()==0;expect(page.locator('#cm-existing-import')).to_be_visible()
  package={'sets':[{'name':'Stellar Miracle','setCode':'SV7','language':'ja','cards':[{'name':'Joltik','number':'032','versions':['Normal','Holo']}]}]}
  page.locator('#setpackagefile').set_input_files({'name':'set.json','mimeType':'application/json','buffer':json.dumps(package).encode()});page.locator('#confirmsetimport').click()
  # Both images and links remain staged until explicit final commit.

@@ -1,4 +1,4 @@
-PKM 2.2.1 — Mac og Windows
+PKM 2.2.2 — Mac og Windows
 
 1. Pak ZIP-filen ud (på Mac: dobbeltklik).
 2. Åbn PKM-UI-V2.2.html i Safari eller Chrome.

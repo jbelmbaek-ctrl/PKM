@@ -1,6 +1,6 @@
 # Download PKM
 
-[**Hent PKM-pakken til Mac eller Windows**](https://github.com/jbelmbaek-ctrl/PKM/raw/refs/heads/main/downloads/PKM-v2.2.1.zip)
+[**Hent PKM-pakken til Mac eller Windows**](https://github.com/jbelmbaek-ctrl/PKM/raw/refs/heads/main/downloads/PKM-v2.2.2.zip)
 
 Pak ZIP-filen ud og åbn **PKM-UI-V2.2.html** i Safari eller Chrome. Ingen Terminal eller installation nødvendig.
 
