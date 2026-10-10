@@ -1,6 +1,6 @@
-# Downloadable PKM v4
+# Downloadable PKM UI V2.2
 
-Build the single-file app with `python3 standalone/build.py`. Output: `/tmp/PKM-v4.1.html`. Open in a modern browser; no installation is required.
+Build the single-file app with `python3 standalone/build.py`. Output: `dist/PKM-UI-V2.2.html`. Open in a modern browser; no installation is required.
 
 ## Japanese set import
 
@@ -12,7 +12,7 @@ TCGdex source: https://github.com/tcgdex/cards-database at commit `4199850a6af49
 
 ## Collection and storage
 
-Data and uploaded images are in IndexedDB, separate from the HTML file. Use **Gem backup** regularly. The existing `pkm-backup-v1` JSON format is supported for restoring earlier collections. Browsers may isolate storage by HTML file path, so save a backup in the old version and restore it in the new version if needed.
+Data and uploaded images are in IndexedDB, separate from the HTML file. Use **Samlingsfil → Gem samlingsfil** regularly. The existing `pkm-backup-v1` JSON format is supported for restoring earlier collections. Browsers may isolate storage by HTML file path, so save a backup in the old version and restore it in the new version if needed.
 
 Gallery +/− changes only the selected variant, condition and location shown in **Hurtig registrering**. Total ownership/progress is across all conditions and locations. Writes are serialized to prevent lost concurrent increments.
 

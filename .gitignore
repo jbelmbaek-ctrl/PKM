@@ -1,6 +1,17 @@
 data/
 node_modules/
-
-# Personlige samlingsfiler og lokal browsercache
 *.pkm
 __pycache__/
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+*.sqlite*
+*.db
+backups/
+private/
+uploads/
+exports/
+*.log
+.DS_Store

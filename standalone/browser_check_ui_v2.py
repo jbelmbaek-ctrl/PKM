@@ -1,10 +1,11 @@
+import os,shutil
 from playwright.sync_api import sync_playwright,expect
 from pathlib import Path
 from PIL import Image,ImageDraw
 import base64,json
 img=Image.new('RGB',(315,440),'#f0c96b');draw=ImageDraw.Draw(img);draw.rounded_rectangle((12,12,303,428),radius=12,fill='#e2ecdc');draw.rectangle((24,60,290,265),fill='#8bb3a5');draw.ellipse((86,98,232,241),fill='#e4a964');draw.line((48,303,270,303),fill='#94aa9d',width=5);draw.line((48,330,240,330),fill='#94aa9d',width=5);img.save('/tmp/ui-test-card.png');image='data:image/png;base64,'+base64.b64encode(Path('/tmp/ui-test-card.png').read_bytes()).decode()
 with sync_playwright() as p:
- b=p.chromium.launch(executable_path='/usr/bin/chromium',headless=True,args=['--no-sandbox']);page=b.new_page(viewport={'width':1512,'height':1100});errors=[];page.on('pageerror',lambda e:errors.append(str(e)));page.on('dialog',lambda d:d.accept());page.goto('http://127.0.0.1:3413/PKM-UI-V2.1.html');page.wait_for_selector('.ui-topbar')
+ b=p.chromium.launch(executable_path=os.environ.get('PKM_BROWSER_EXECUTABLE') or shutil.which('chromium') or shutil.which('google-chrome'),headless=True,args=['--no-sandbox']);page=b.new_page(viewport={'width':1512,'height':1100});errors=[];page.on('pageerror',lambda e:errors.append(str(e)));page.on('dialog',lambda d:d.accept());page.goto(os.environ.get('PKM_TEST_URL','http://127.0.0.1:3413/PKM-UI-V2.2.html'));page.wait_for_selector('.ui-topbar')
  page.wait_for_function("document.fonts.check('16px \"PKM Inter\"')")
  assert page.locator('aside').count()==0;assert page.locator('nav button').count()==5;assert page.locator('main').evaluate("e=>getComputedStyle(e).marginLeft")!='224px'
  cards=[{'name':n+' (テスト)','englishName':n,'japaneseName':'テスト','number':str(i+1).zfill(3),'image':image if i<8 else '', 'versions':['Normal','Holo']} for i,n in enumerate(['Ledyba','Ledian','Ariados','Venonat','Venomoth','Oddish','Spinarak','Crobat','Chinchou','Lanturn','Hoppip','Skiploom'])]

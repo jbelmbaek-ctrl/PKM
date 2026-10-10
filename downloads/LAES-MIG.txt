@@ -1,0 +1,27 @@
+PKM 2.2 — Mac og Windows
+
+1. Pak ZIP-filen ud (på Mac: dobbeltklik).
+2. Åbn PKM-UI-V2.2.html i Safari eller Chrome.
+3. Har du allerede en samling? Gem samlingsfil i den gamle app først.
+   I den nye app: Samlingsfil > Åbn samlingsfil, vælg din .pkm-fil.
+4. Cardmarket-SV7.csv importeres i appens Import > Cardmarket-links.
+   Importér Stellar Miracle / SV7 først. Filen indeholder 135 produktlinks.
+
+HTML-filen indeholder programmet, IKKE din personlige samling.
+Samling, beholdning og egne billeder ligger i den browser, du bruger.
+Samlingsfil > Gem samlingsfil downloader alle disse data som .pkm.
+Gem jævnligt en kopi et andet sted, fx iCloud Drive eller en ekstern disk.
+En lager-CSV er ikke en fuld backup og indeholder ikke billeder.
+
+Indlæsning af en samlingsfil gemmer automatisk den tidligere samling
+som én lokal gendannelseskopi. Samlingsfil > Gendan før seneste indlæsning.
+Gendannelseskopien forsvinder også, hvis browserdata slettes.
+
+Behold den samme HTML-fil på samme placering. Forskellige browsere,
+privat browsing og en anden filplacering kan give et separat/tomt lager.
+Åbn din .pkm-fil igen for at flytte samlingen. Slet ikke gammel app eller
+browserdata før du har kontrolleret billeder og antal i den nye app.
+
+Appen sender ikke beholdning eller importerede billeder til en server.
+Eksterne billedadresser og Cardmarket-links kræver internet.
+.pkm-filer er ikke krypterede. Del dem kun, når du ønsker at dele samlingen.

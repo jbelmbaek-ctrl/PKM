@@ -1,5 +1,6 @@
 from pathlib import Path
 import base64
+import hashlib
 base=Path(__file__).resolve().parent
 root=base.parent/'public'
 app=(root/'app.js').read_text()
@@ -45,8 +46,8 @@ adapter=adapter.replace('__STORAGE__',(base/'storage.js').read_text())
 adapter+="\nconst localFetch=window.fetch;let writeQueue=Promise.resolve();window.fetch=(url,opts={})=>{if(!opts.body)return writeQueue.then(()=>localFetch(url,opts));const result=writeQueue.then(()=>localFetch(url,opts));writeQueue=result.catch(()=>{});return result;};\n"
 app=app.replace('function parseCSV(text){','function parseCSV(text,separator=\",\"){').replace("c===','&&!quoted","c===separator&&!quoted")
 v3="const PKM_CATALOG_GZIP="+repr(base64.b64encode((base/'catalog-ja.json.gz').read_bytes()).decode())+";\n"+(base/'v3.js').read_text()
-extraJS=(base/'enhancements.js').read_text()+"\n"+v3+"\n"+(base/'v4.js').read_text()+"\n"+(base/'image-fix.js').read_text()+"\n"+(base/'import-status.js').read_text()+"\n"+(base/'set-code-fix.js').read_text()+"\n"+(base/'v5.js').read_text()+"\n"+(base/'card-details.js').read_text()+"\n"+(base/'ui-v2.js').read_text()+"\n"+(base/'cardmarket.js').read_text()
-extraCSS=(base/'enhancements.css').read_text()+(base/'v3.css').read_text()+(base/'v4.css').read_text()+(base/'v5.css').read_text()+(base/'card-details.css').read_text()+(base/'ui-v2.css').read_text()+(base/'cardmarket.css').read_text()
+extraJS=(base/'enhancements.js').read_text()+"\n"+v3+"\n"+(base/'v4.js').read_text()+"\n"+(base/'image-fix.js').read_text()+"\n"+(base/'import-status.js').read_text()+"\n"+(base/'set-code-fix.js').read_text()+"\n"+(base/'v5.js').read_text()+"\n"+(base/'card-details.js').read_text()+"\n"+(base/'ui-v2.js').read_text()+"\n"+(base/'cardmarket.js').read_text()+"\n"+(base/'security.js').read_text()
+extraCSS=(base/'enhancements.css').read_text()+(base/'v3.css').read_text()+(base/'v4.css').read_text()+(base/'v5.css').read_text()+(base/'card-details.css').read_text()+(base/'ui-v2.css').read_text()+(base/'cardmarket.css').read_text()+(base/'security.css').read_text()
 
 extraCSS="@font-face{font-family:'PKM Inter';src:url(data:font/woff2;base64,"+base64.b64encode((base/'inter-latin.woff2').read_bytes()).decode()+") format('woff2');font-weight:100 900;font-style:normal;font-display:swap;}"+extraCSS
 
@@ -56,14 +57,18 @@ document.querySelector('#downloadbackup').onclick=()=>{const a=document.createEl
 document.querySelector('#restorebackup').onclick=()=>document.querySelector('#backupfile').click();
 document.querySelector('#backupfile').onchange=async e=>{try{const file=e.target.files[0];if(!file)return;const b=JSON.parse(await file.text()),d=b.data;if(b.format!=='pkm-backup-v1'||!d||!['sets','cards','versions','locations','holdings'].every(k=>Array.isArray(d[k])))throw Error('Ugyldig PKM-backup');for(const k of ['sets','cards','versions','locations','holdings']){if(d[k].some(r=>!Number.isSafeInteger(r.id)||r.id<1)||new Set(d[k].map(r=>r.id)).size!==d[k].length)throw Error('Ugyldige ID’er');}
 if(d.sets.some(s=>typeof s.name!=='string')||d.locations.some(l=>typeof l.name!=='string')||d.cards.some(c=>typeof c.name!=='string'||typeof c.number!=='string'||typeof c.image!=='string'||!d.sets.some(s=>s.id===c.set_id))||d.versions.some(v=>typeof v.name!=='string'||!d.cards.some(c=>c.id===v.card_id))||d.holdings.some(h=>!Number.isSafeInteger(h.quantity)||h.quantity<1||typeof h.condition!=='string'||!d.versions.some(v=>v.id===h.version_id)||!d.locations.some(l=>l.id===h.location_id)))throw Error('Backup indeholder ugyldige poster');
-if(!confirm('Erstat den nuværende samling med denne backup? Gem først en backup af dine nuværende data.'))return;await persist(d);db=d;render();alert('Backup indlæst');}catch(err){alert(err.message);}finally{e.target.value='';}};
+validateCollectionData(d);if(!confirm('Erstat den nuværende samling med denne backup? Gem først en backup af dine nuværende data.'))return;await persist(d,{backupBeforeReplace:true});db=d;render();alert('Backup indlæst');}catch(err){alert(err.message);}finally{e.target.value='';}};
 '''
 html=(root/'index.html').read_text().replace('<link rel="stylesheet" href="/style.css">','<style>'+(root/'style.css').read_text()+extraCSS+'.backup{padding-top:15px}.backup p{font-size:11px;margin:8px 0 0}</style>').replace('href="/"','href="#"').replace('Lokal database','Browserlager').replace('<script type="module" src="/app.js"></script>','<script type="module">'+adapter+'\n'+app+'\n'+extraJS+'\n'+backup+'</script>')
+script=adapter+'\n'+app+'\n'+extraJS+'\n'+backup
+script_hash=base64.b64encode(hashlib.sha256(script.encode()).digest()).decode()
+policy="default-src 'none'; script-src 'sha256-"+script_hash+"'; style-src 'unsafe-inline'; font-src data:; img-src data: blob: https: http:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'"
+html=html.replace('<head>','<head><meta http-equiv="Content-Security-Policy" content="'+policy+'"><meta name="referrer" content="no-referrer">')
 html+='<!-- TCGdex data license\n'+(base/'TCGDEX-LICENSE.txt').read_text()+'\n'+(base/'POKEAPI-LICENSE.txt').read_text()+'\n'+(base/'INTER-LICENSE.txt').read_text()+'\n-->'
 release_dir=base.parent/'dist'
 release_dir.mkdir(exist_ok=True)
-(release_dir/'PKM-UI-V2.1.html').write_text(html)
-Path('/tmp/PKM-UI-V2.1.html').write_text(html)
-print('Built /tmp/PKM-UI-V2.1.html')
+(release_dir/'PKM-UI-V2.2.html').write_text(html)
+Path('/tmp/PKM-UI-V2.2.html').write_text(html)
+print('Built /tmp/PKM-UI-V2.2.html')
 Path('/tmp/pkm-standalone.mjs').write_text(adapter+'\n'+app+'\n'+extraJS+'\n'+backup)
 Path('/tmp/pkm-adapter.mjs').write_text(adapter.replace('window.fetch','globalThis.fetch'))
