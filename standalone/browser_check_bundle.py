@@ -18,7 +18,7 @@ with sync_playwright() as p:
  csv='setkode;kortnummer;version;cardmarket_url\nSV7;032;Normal;'+url+'\nSV7;032;Holo;https://example.com/bad\n'
  page.locator('#bundle-links-file').set_input_files({'name':'links.csv','mimeType':'text/csv','buffer':csv.encode()});expect(page.locator('#bundle-links-preview')).to_contain_text('1 matches');expect(page.locator('#bundle-links-next')).to_be_disabled();assert not state()['sets']
  page.locator('#bundle-links-skip').check();page.locator('#bundle-links-next').click();assert not state()['sets'];expect(page.locator('#setpackagepreview')).to_contain_text('1 Cardmarket-links')
- page.locator('#bundle-confirm-back').click();expect(page.locator('#bundle-links-preview')).to_contain_text('1 links er allerede valgt');page.locator('#bundle-links-next').click()
+ page.locator('#bundle-confirm-back').click();expect(page.locator('#bundle-links-preview')).to_contain_text('1 matches · 1 rækker med fejl');expect(page.locator('#bundle-links-skip')).to_be_checked();page.locator('#bundle-links-next').click()
  # Simulate a failed atomic write, then retry with the same staged package.
  page.evaluate("()=>{window.realFetch=window.fetch;window.fetch=async(u,o)=>u==='/api/import-bundle'?new Response(JSON.stringify({error:'Testfejl'}),{status:400}):window.realFetch(u,o)}")
  page.locator('#bundle-save').click();expect(page.locator('#bundle-save-error')).to_contain_text('Testfejl');assert not state()['sets'];page.evaluate('()=>{window.fetch=window.realFetch}')

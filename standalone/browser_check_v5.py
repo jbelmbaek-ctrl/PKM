@@ -7,7 +7,7 @@ Image.new('RGB',(100,140),'#dda440').save('/tmp/v5-card.png')
 image=Path('/tmp/v5-card.png').read_bytes()
 with sync_playwright() as p:
  b=p.chromium.launch(executable_path=os.environ.get('PKM_BROWSER_EXECUTABLE') or shutil.which('chromium') or shutil.which('google-chrome'),headless=True,args=['--no-sandbox']);page=b.new_page();errors=[];page.on('pageerror',lambda e:errors.append(str(e)));page.on('dialog',lambda d:d.accept())
- page.goto(os.environ.get('PKM_TEST_URL','http://127.0.0.1:3413/PKM-UI-V2.2.html'));page.wait_for_selector('#v5tools');assert page.locator('nav button').count()==5
+ page.goto(os.environ.get('PKM_TEST_URL','http://127.0.0.1:3413/PKM-UI-V2.3.html'));page.wait_for_selector('#v5tools');assert page.locator('nav button').count()==5
  page.locator('nav button').filter(has_text='Import').click()
  package={'sets':[{'name':'Test Set','englishName':'Test Set','setCode':'TEST','cards':[{'name':'Test Card','englishName':'Test Card','number':'001','versions':['Normal','Holo']}]}]}
  page.locator('#setpackagefile').set_input_files({'name':'set.json','mimeType':'application/json','buffer':json.dumps(package).encode()})

@@ -1,6 +1,6 @@
-# Downloadable PKM UI V2.2
+# Downloadable PKM UI V2.3
 
-Build the single-file app with `python3 standalone/build.py`. Output: `dist/PKM-UI-V2.2.html`. Open in a modern browser; no installation is required.
+Build the single-file app with `python3 standalone/build.py`. Output: `dist/PKM-UI-V2.3.html`. Open in a modern browser; no installation is required.
 
 ## Japanese set import
 

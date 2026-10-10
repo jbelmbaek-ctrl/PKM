@@ -2,7 +2,7 @@
 
 ## Aktuel app
 
-Den aktuelle app er `dist/PKM-UI-V2.2.html`. Samling og importerede billeder gemmes lokalt i IndexedDB, ikke på GitHub eller i Codex. Samlingsfiler indeholder billeder, beholdning og links. De er ikke krypterede. Gem dem i din egen beskyttede mappe og tag en separat backup.
+Den aktuelle app er `dist/PKM-UI-V2.3.html`. Samling og importerede billeder gemmes lokalt i IndexedDB, ikke på GitHub eller i Codex. Samlingsfiler indeholder billeder, beholdning og links. De er ikke krypterede. Gem dem i din egen beskyttede mappe og tag en separat backup.
 
 Før en indlæst fil erstatter samlingen, gemmes den gamle samling og den nye i samme IndexedDB-transaktion. Fejl ruller begge ændringer tilbage. Menuen Samlingsfil kan gendanne den seneste kopi; gendannelse gemmer den aktuelle samling som næste kopi. Kun én gendannelseskopi bevares. Slettede browserdata eller diskfejl kan også slette den.
 
@@ -23,3 +23,11 @@ GitHub indeholder kildekode, offentligt katalog, app og gennemgåede downloadfil
 CI kontrollerer funktioner og sikkerhed, søger efter almindelige hemmeligheder, bygger appen og sammenligner downloadpakken. Actions er fastlåst til commit-SHA og har kun læseadgang.
 
 GitHub-kontoens 2FA, arkivets synlighed og branch protection kan ikke administreres med denne sessions API-adgang. Disse kontroller er ikke blevet aktiveret eller verificeret. Koden og filerne er versionsstyrede, men dette er ikke automatisk backup af din personlige samling.
+
+## Importkladder og katalogopdatering
+
+Importkladden gemmes separat i IndexedDB, inklusive valgte billedfiler, manuelle matches, rettede linkrækker og det aktuelle trin. Den indeholder ingen ændring af den gemte samling før sidste gemning. En kladde er knyttet til browserlageret og er ikke inkluderet i .pkm-eksporten. Sletning af browserdata sletter også kladden. Hvis browseren afviser kladdelagring, vises en fejl; valgene kan stadig være bevaret i den aktuelle session.
+
+Katalogopdatering viser ændringer før gemning. Eksisterende billeder og links beholdes, medmindre erstatning vælges. Brugerrettede kortnavne, beholdning og lokations-ID’er bevares. Nye kort og versioner tilføjes; eksisterende versioner slettes ikke. Opdateringen valideres og gemmes som én transaktion.
+
+Flytning, redigering og fjernelse af flere lagerposter gemmes samlet og kan fortrydes fra de seneste 20 lagerændringer. Samlemål og lokationsnavne følger med samlingsfilen. Samlemål ændrer rapportberegninger, ikke beholdningen.

@@ -7,7 +7,7 @@ patterns=[re.compile(r'-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----'),re.co
 failures=[]
 for name in filter(None,paths):
  p=root/name
- if name.split('/')[0] in {'data','private','backups','uploads','exports'} or p.suffix in {'.pkm','.pem','.key','.sqlite','.db'} or p.name=='.env':failures.append(name+': private file tracked')
+ if name.split('/')[0] in {'data','private','backups','uploads','exports'} or p.suffix in {'.pkm','.pem','.key','.sqlite','.db'} or p.name=='.env' or re.match(r'PKM-(?:lager|dubletter|mangler|samling|backup)-',p.name):failures.append(name+': private file tracked')
  if not p.is_file():continue
  try:text=p.read_text()
  except UnicodeError:continue

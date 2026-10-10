@@ -7,7 +7,7 @@ Image.new('RGB',(700,980),'#edc451').save('/tmp/detail-test.jpg')
 image='data:image/jpeg;base64,'+base64.b64encode(Path('/tmp/detail-test.jpg').read_bytes()).decode()
 with sync_playwright() as p:
  b=p.chromium.launch(executable_path=os.environ.get('PKM_BROWSER_EXECUTABLE') or shutil.which('chromium') or shutil.which('google-chrome'),headless=True,args=['--no-sandbox']);page=b.new_page(viewport={'width':1440,'height':1000},color_scheme='dark');errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
- page.goto(os.environ.get('PKM_TEST_URL','http://127.0.0.1:3413/PKM-UI-V2.2.html'));page.wait_for_selector('#v5tools')
+ page.goto(os.environ.get('PKM_TEST_URL','http://127.0.0.1:3413/PKM-UI-V2.3.html'));page.wait_for_selector('#v5tools')
  assert page.evaluate("async image=>{const r=await fetch('/api/import-bundle',{body:JSON.stringify({sets:[{name:'Stellar Miracle','englishName':'Stellar Miracle',setCode:'SV7',cards:[{name:'Ledyba (レディバ)',englishName:'Ledyba',japaneseName:'レディバ',number:'001',image,versions:['Normal','Reverse Holo']},{name:'No Image',number:'002',versions:['Normal']}]}]})});return r.status}",image)==200
  page.reload();page.wait_for_selector('#v5tools');page.locator('nav button').filter(has_text='Sets').click();page.locator('[data-set="1"]').click();page.locator('.art-button[data-card="1"]').click()
  expect(page.locator('#modal')).to_be_visible();expect(page.locator('.card-detail-data')).to_contain_text('Reverse Holo');assert page.locator('#modal').evaluate("e=>getComputedStyle(e).backgroundColor")=='rgb(255, 255, 255)'

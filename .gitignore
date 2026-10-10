@@ -15,3 +15,10 @@ uploads/
 exports/
 *.log
 .DS_Store
+
+# Private app exports, including legacy backups
+PKM-lager-*.csv
+PKM-dubletter-*.csv
+PKM-mangler-*.csv
+PKM-samling-*.json
+PKM-backup-*.json

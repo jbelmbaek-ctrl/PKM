@@ -1,7 +1,7 @@
-PKM 2.2.3 — Mac og Windows
+PKM 2.3.0 — Mac og Windows
 
 1. Pak ZIP-filen ud (på Mac: dobbeltklik).
-2. Åbn PKM-UI-V2.2.html i Safari eller Chrome.
+2. Åbn PKM-UI-V2.3.html i Safari eller Chrome.
 3. Har du allerede en samling? Gem samlingsfil i den gamle app først.
    I den nye app: Samlingsfil > Åbn samlingsfil, vælg din .pkm-fil.
 4. Cardmarket-SV7.csv importeres i appens Import > Cardmarket-links.
@@ -28,3 +28,20 @@ Eksterne billedadresser og Cardmarket-links kræver internet.
 
 Setimport: vælg kort, billeder og Cardmarket-links, kontrollér oversigten,
 og klik Opret sets, billeder og links. Intet gemmes før dette sidste trin.
+
+NYT I PKM 2.3
+Importkladder: gå til Import og vælg Fortsæt kladde. Valg, billedfiler,
+rettede links og trin gemmes i samme browser. Kladden er ikke en del af
+samlingsfilen; den eksporteres ikke og følger ikke med til en anden browser.
+
+Eksisterende set: Sets > Opdatér katalog eller Import > Opdatér eksisterende
+sets. Kontrollér ændringer. Billeder og links erstattes kun efter et aktivt
+valg. Brugerrettede kortnavne og beholdning bevares.
+
+Klik på billed-/linkstatus i setlisten for at åbne Katalogkontrol.
+Ændr standardens samlemål i Overblik og eventuelt et særskilt mål under Sets.
+Mangler og dubletter følger målet. Beholdningen ændres ikke af målvalg.
+
+Lagergrupper samler samme version, stand og lokation. Markér grupper for
+samlet flytning/fjernelse. Fortryd seneste lagerændring gendanner de gamle
+poster. CSV-eksportens antal stemmer med den viste liste.

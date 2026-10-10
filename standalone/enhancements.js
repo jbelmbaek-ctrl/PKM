@@ -5,9 +5,9 @@ let stockFilters={query:'',set:'',version:'',condition:'',location:'',duplicates
 let setQuery='',setGame='';
 const sum=(items,fn)=>items.reduce((a,x)=>a+fn(x),0);
 const format=n=>new Intl.NumberFormat('da-DK').format(n);
-const setOf=c=>db.sets.find(s=>s.id===c.set_id);
-const cardOf=v=>db.cards.find(c=>c.id===v.card_id);
-const locationOf=h=>db.locations.find(l=>l.id===h.location_id);
+const setOf=c=>pkmIndex(db).sets.get(c.set_id);
+const cardOf=v=>pkmIndex(db).cards.get(v.card_id);
+const locationOf=h=>pkmIndex(db).locations.get(h.location_id);
 const collator=new Intl.Collator('da',{numeric:true,sensitivity:'base'});
 function totals(cs=db.cards){const vs=cs.flatMap(versions);return {cards:cs.length,owned:cs.filter(c=>qty(c)>0).length,versions:vs.length,ownedVersions:vs.filter(v=>vqty(v)>0).length,copies:sum(cs,qty),duplicates:sum(vs,v=>Math.max(0,vqty(v)-1))};}
 const percentage=(a,b)=>b?Math.round(a/b*100):0;

@@ -4,7 +4,7 @@ from pathlib import Path
 import json
 URL='https://www.cardmarket.com/en/Pokemon/Products/Singles/Stellar-Miracle/Joltik-V1-sv7032?language=7'
 with sync_playwright() as p:
- b=p.chromium.launch(executable_path=os.environ.get('PKM_BROWSER_EXECUTABLE') or shutil.which('chromium') or shutil.which('google-chrome'),headless=True,args=['--no-sandbox']);page=b.new_page();errors=[];page.on('pageerror',lambda e:errors.append(str(e)));page.on('dialog',lambda d:d.accept());page.goto(os.environ.get('PKM_TEST_URL','http://127.0.0.1:3413/PKM-UI-V2.2.html'));page.wait_for_selector('#v5tools')
+ b=p.chromium.launch(executable_path=os.environ.get('PKM_BROWSER_EXECUTABLE') or shutil.which('chromium') or shutil.which('google-chrome'),headless=True,args=['--no-sandbox']);page=b.new_page();errors=[];page.on('pageerror',lambda e:errors.append(str(e)));page.on('dialog',lambda d:d.accept());page.goto(os.environ.get('PKM_TEST_URL','http://127.0.0.1:3413/PKM-UI-V2.3.html'));page.wait_for_selector('#v5tools')
  payload={'sets':[{'name':'Stellar Miracle','setCode':'SV7','language':'ja','cards':[{'name':'Joltik','englishName':'Joltik','number':'032','versions':['Normal','Holo']}]}]}
  assert page.evaluate("async p=>(await fetch('/api/import-bundle',{body:JSON.stringify(p)})).status",payload)==200
  page.reload();page.wait_for_selector('#v5tools');page.locator('nav button').filter(has_text='Sets').click();page.locator('[data-set="1"]').click();expect(page.locator('.cm-link.compact')).to_contain_text('Søg');assert 'searchString=Joltik' in page.locator('.cm-link.compact').get_attribute('href') and 'language=7' in page.locator('.cm-link.compact').get_attribute('href')
