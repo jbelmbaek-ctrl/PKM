@@ -14,7 +14,7 @@ with sync_playwright() as p:
  page.locator('#confirmsetimport').click();page.locator('#v5stagedfiles').set_input_files({'name':'TEST-001.png','mimeType':'image/png','buffer':image});expect(page.locator('#v5matchsummary')).to_contain_text('1 matches')
  assert page.evaluate("async()=> (await (await fetch('/api/state')).json()).cards.length")==0
  page.evaluate('window.originalConfirm=window.confirm;window.confirm=()=>false')
- page.locator('#v5finish').click();expect(page.locator('h1')).to_have_text('Sets');expect(page.locator('.success')).to_contain_text('Import afsluttet')
+ page.locator('#v5finish').click();expect(page.locator('#bundle-links-file')).to_be_visible();assert page.evaluate("async()=> (await (await fetch('/api/state')).json()).sets.length")==0;page.locator('#bundle-links-next').click();page.locator('#bundle-save').click();expect(page.locator('h1')).to_have_text('Sets');expect(page.locator('.success')).to_contain_text('Import afsluttet')
  page.evaluate('window.confirm=window.originalConfirm')
  state=page.evaluate("async()=>await (await fetch('/api/state')).json()");assert state['cards'][0]['image'].startswith('data:image/jpeg;')
  page.locator('[data-set="1"]').click();page.wait_for_function("document.querySelector('.collect-card img').naturalWidth>0")

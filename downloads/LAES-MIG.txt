@@ -1,4 +1,4 @@
-PKM 2.2 — Mac og Windows
+PKM 2.2.1 — Mac og Windows
 
 1. Pak ZIP-filen ud (på Mac: dobbeltklik).
 2. Åbn PKM-UI-V2.2.html i Safari eller Chrome.
@@ -25,3 +25,6 @@ browserdata før du har kontrolleret billeder og antal i den nye app.
 Appen sender ikke beholdning eller importerede billeder til en server.
 Eksterne billedadresser og Cardmarket-links kræver internet.
 .pkm-filer er ikke krypterede. Del dem kun, når du ønsker at dele samlingen.
+
+Setimport: vælg kort, billeder og Cardmarket-links, kontrollér oversigten,
+og klik Opret sets, billeder og links. Intet gemmes før dette sidste trin.

@@ -54,3 +54,5 @@ python3 scripts/package_release.py
 ```
 
 `downloads/` indeholder kun gennemgåede udgivelsesfiler; `exports/`, `private/`, `backups/` og `data/` må ikke uploades. GitHub-workflowet gentager kontrollerne og verificerer, at downloadpakken svarer til koden.
+
+Setimport opretter først data på det femte trin: vælg sets, kontrollér kort, tilføj billeder, tilføj Cardmarket-links, kontrollér og gem. CSV matches mod de endnu ikke oprettede kort og deres versioner. Rækker med fejl kræver rettelse eller et udtrykkeligt valg om at springe dem over. Sets, billeder og links gemmes samlet.
